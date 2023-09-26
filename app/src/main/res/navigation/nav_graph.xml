@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mapsFragment">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="mx.tec.laventana.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="mx.tec.laventana.fragments.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/placesList"
+        android:name="mx.tec.laventana.fragments.PlacesList"
+        android:label="fragment_places_list"
+        tools:layout="@layout/fragment_places_list" />
+    <fragment
+        android:id="@+id/search"
+        android:name="mx.tec.laventana.fragments.Search"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+</navigation>

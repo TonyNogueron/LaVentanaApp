@@ -2,64 +2,59 @@ package mx.tec.laventana
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import mx.tec.laventana.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var toolbar: Toolbar
+    private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(MapsFragment())
-        binding.bottomNavigationView.selectedItemId = R.id.homeMenuItem
 
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.homeMenuItem -> {
-                    replaceFragment(MapsFragment())
-                    true
-                }
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-                R.id.searchMenuItem -> {
-                    replaceFragment(Search())
-                    true
-                }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
-                R.id.placesListMenuItem -> {
-                    replaceFragment(PlacesList())
-                    true
-                }
-
-                else -> false
-            }
-
-        }
+        binding.bottomNavigationView.setupWithNavController(navController)
+//
+//        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.homeMenuItem -> {
+//                    navController.navigate(R.id.mapsFragment)
+//                    true
+//                }
+//
+//                R.id.placesListMenuItem -> {
+//                    navController.navigate(R.id.placesList)
+//                    true
+//                }
+//
+//                R.id.searchMenuItem -> {
+//                    navController.navigate(R.id.search)
+//                    true
+//                }
+//
+//                else -> false
+//            }
+//        }
+        binding.bottomNavigationView.selectedItemId = R.id.mapsFragment
+//        navController.navigate(R.id.mapsFragment)
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager: FragmentManager = supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-
-        val existingFragment = fragmentManager.findFragmentByTag(fragment.javaClass.simpleName)
-
-        if (existingFragment == null) {
-            fragmentTransaction.add(
-                R.id.fragment_container, fragment, fragment.javaClass.simpleName
-            )
-        } else {
-            fragmentTransaction.show(existingFragment)
-        }
-
-        for (existingFrag in fragmentManager.fragments) {
-            if (existingFrag != existingFragment) {
-                fragmentTransaction.hide(existingFrag)
-            }
-        }
-
-        fragmentTransaction.commit()
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
 }
