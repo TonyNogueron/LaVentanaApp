@@ -29,29 +29,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         binding.bottomNavigationView.setupWithNavController(navController)
-//
-//        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-//            when (item.itemId) {
-//                R.id.homeMenuItem -> {
-//                    navController.navigate(R.id.mapsFragment)
-//                    true
-//                }
-//
-//                R.id.placesListMenuItem -> {
-//                    navController.navigate(R.id.placesList)
-//                    true
-//                }
-//
-//                R.id.searchMenuItem -> {
-//                    navController.navigate(R.id.search)
-//                    true
-//                }
-//
-//                else -> false
-//            }
-//        }
         binding.bottomNavigationView.selectedItemId = R.id.mapsFragment
-//        navController.navigate(R.id.mapsFragment)
     }
 
     override fun onSupportNavigateUp(): Boolean {
