@@ -1,13 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.Search">
 
-    <TextView
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="27dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/search_bar_background"
+        android:drawableEnd="@drawable/ic_baseline_clear_24"
+        android:drawablePadding="8dp"
+        android:elevation="4dp"
+        android:hint="@string/search_hint"
+        android:inputType="text"
+        android:paddingStart="18dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearResult1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextText">
+
+        <TextView
+            android:id="@+id/textViewResult1"
+            android:layout_width="0dp"
+            android:layout_height="26sp"
+            android:layout_gravity="start"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="Result 1" />
+
+        <ImageView
+            android:id="@+id/iconResult1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:contentDescription="@string/suggestion_icon"
+            android:scaleX="-1"
+            android:src="@drawable/ic_baseline_arrow_outward_24" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/separator1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Search" />
+        android:layout_height="1dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="27dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/linearResult1" />
+
+    <LinearLayout
+        android:id="@+id/linearResult2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator1">
+
+        <TextView
+            android:id="@+id/textViewResult2"
+            android:layout_width="0dp"
+            android:layout_height="26sp"
+            android:layout_gravity="start"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="Result 2" />
+
+        <ImageView
+            android:id="@+id/iconResult2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:contentDescription="@string/suggestion_icon"
+            android:scaleX="-1"
+            android:src="@drawable/ic_baseline_arrow_outward_24" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/separator2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="27dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/linearResult2" />
+
+    <!-- Result 3 -->
+    <LinearLayout
+        android:id="@+id/linearResult3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator2">
+
+        <TextView
+            android:id="@+id/textViewResult3"
+            android:layout_width="0dp"
+            android:layout_height="26sp"
+            android:layout_gravity="start"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="Result 3" />
+
+        <ImageView
+            android:id="@+id/iconResult3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:contentDescription="@string/suggestion_icon"
+            android:scaleX="-1"
+            android:src="@drawable/ic_baseline_arrow_outward_24" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/separator3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="27dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/linearResult3" />
+
+    <TextView
+        android:id="@+id/textViewSuggestedPlace"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="27dp"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-black"
+        android:text="Suggested Places"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator3" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

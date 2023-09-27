@@ -16,9 +16,12 @@ class MapsFragment : Fragment() {
 
     private lateinit var map: GoogleMap
 
+
+    private val cien_natural_location = LatLng(21.02399893023223, -89.62432365666739)
+
     private val soumayaMuseumLocation = LatLng(19.440057, -99.204380)
-    private var currentCameraPosition = soumayaMuseumLocation
-    private var currentZoom = 15f
+    private var currentCameraPosition = cien_natural_location
+    private var currentZoom = 8f
 
 
     override fun onCreateView(
@@ -36,6 +39,9 @@ class MapsFragment : Fragment() {
             map = googleMap
             map.addMarker(
                 MarkerOptions().position(soumayaMuseumLocation).title("Soumaya Museum")
+            )
+            map.addMarker(
+                MarkerOptions().position(cien_natural_location).title("100% Natural Mérida")
             )
 
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentCameraPosition, currentZoom))

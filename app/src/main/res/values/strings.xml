@@ -3,4 +3,6 @@
     <string name="search">Search</string>
     <string name="places">Places</string>
     <string name="home">Home</string>
+    <string name="suggestion_icon">Suggestion icon</string>
+    <string name="search_hint">Search</string>
 </resources>
