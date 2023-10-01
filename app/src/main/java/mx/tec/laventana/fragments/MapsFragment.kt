@@ -18,6 +18,7 @@ class MapsFragment : Fragment() {
 
 
     private val cien_natural_location = LatLng(21.02399893023223, -89.62432365666739)
+    private val universidad_del_caribe = LatLng(21.20043752948293, -86.82345426948685)
 
     private val soumayaMuseumLocation = LatLng(19.440057, -99.204380)
     private var currentCameraPosition = cien_natural_location
@@ -42,6 +43,9 @@ class MapsFragment : Fragment() {
             )
             map.addMarker(
                 MarkerOptions().position(cien_natural_location).title("100% Natural Mérida")
+            )
+            map.addMarker(
+                MarkerOptions().position(universidad_del_caribe).title("Universidad del Caribe")
             )
 
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentCameraPosition, currentZoom))
