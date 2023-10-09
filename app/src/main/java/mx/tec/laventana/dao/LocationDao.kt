@@ -8,7 +8,7 @@ import mx.tec.laventana.model.Location
 @Dao
 interface LocationDao {
     @Query("SELECT * FROM Location")
-    fun getLocations(): List<Location>
+    fun getLocations(): MutableList<Location>
 
     @Insert
     fun registerLocation(location: Location)

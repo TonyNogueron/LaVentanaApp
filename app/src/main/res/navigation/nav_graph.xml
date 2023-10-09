@@ -5,11 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/mapsFragment">
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="mx.tec.laventana.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/mapsFragment"
         android:name="mx.tec.laventana.fragments.MapsFragment"

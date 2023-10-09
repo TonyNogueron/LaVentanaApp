@@ -46,8 +46,7 @@
             android:layout_height="26sp"
             android:layout_gravity="start"
             android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="Result 1" />
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/iconResult1"
@@ -88,8 +87,7 @@
             android:layout_height="26sp"
             android:layout_gravity="start"
             android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="Result 2" />
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/iconResult2"
@@ -131,8 +129,7 @@
             android:layout_height="26sp"
             android:layout_gravity="start"
             android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="Result 3" />
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/iconResult3"
