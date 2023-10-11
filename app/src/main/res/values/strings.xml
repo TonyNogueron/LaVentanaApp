@@ -6,4 +6,6 @@
     <string name="suggestion_icon">Suggestion icon</string>
     <string name="search_hint">Search</string>
     <string name="todo">TODO</string>
+    <string name="btnCInfo">+INFO</string>
+    <string name="btnCMap">VER MAPA</string>
 </resources>

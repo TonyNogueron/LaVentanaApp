@@ -5,14 +5,54 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import mx.tec.laventana.R
+import mx.tec.laventana.adapter.LocationCardAdapter
+import mx.tec.laventana.model.Location
+import mx.tec.laventana.utility.AppDatabase
 
 class PlacesList : Fragment() {
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var placesAdapter: LocationCardAdapter
+    private lateinit var places: MutableList<Location>
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_places_list, container, false)
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = view.findViewById<RecyclerView>(R.id.rvPlacesList)
+        places = mutableListOf()
+
+        val db = AppDatabase.getInstance(requireContext())
+
+        GlobalScope.launch(Dispatchers.IO) {
+            places = db.locationDao().getLocations()
+            withContext(Dispatchers.Main) {
+                placesAdapter = LocationCardAdapter(requireContext(), places) { position ->
+
+                }
+                recyclerView.apply {
+                    adapter = placesAdapter
+                    setHasFixedSize(true)
+                    layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+                        requireContext(),
+                        androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+                        false
+                    )
+                }
+            }
+        }
     }
 }
