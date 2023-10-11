@@ -66,22 +66,22 @@ class LocationCardAdapter(
         holder.bindData(location)
 
         holder.itemView.setOnClickListener {
+            listener?.onItemClick(location)
             itemClickCallback(position)
-            moreInfoClicked(location)
         }
 
         val animation = AnimationUtils.loadAnimation(context, R.anim.bounce)
-    }
-
-
-    private fun moreInfoClicked(location: Location) {
-        Toast.makeText(context, "More info clicked: " + location.name, Toast.LENGTH_SHORT).show()
+        holder.itemView.startAnimation(animation)
     }
 
     fun updateData(locations: MutableList<Location>) {
         dataSource.clear()
         dataSource.addAll(locations)
         notifyDataSetChanged()
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
     }
 
 }

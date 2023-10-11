@@ -9,15 +9,32 @@
         android:id="@+id/mapsFragment"
         android:name="mx.tec.laventana.fragments.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_moreInfoFragment"
+            app:destination="@id/moreInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/placesList"
         android:name="mx.tec.laventana.fragments.PlacesList"
         android:label="fragment_places_list"
-        tools:layout="@layout/fragment_places_list" />
+        tools:layout="@layout/fragment_places_list" >
+        <action
+            android:id="@+id/action_placesList_to_moreInfoFragment"
+            app:destination="@id/moreInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/search"
         android:name="mx.tec.laventana.fragments.Search"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_search_to_moreInfoFragment"
+            app:destination="@id/moreInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moreInfoFragment"
+        android:name="mx.tec.laventana.fragments.MoreInfoFragment"
+        android:label="fragment_more_info"
+        tools:layout="@layout/fragment_more_info" />
 </navigation>
