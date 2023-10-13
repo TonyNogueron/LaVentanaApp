@@ -59,10 +59,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         allPlacesButton = view.findViewById(R.id.showAllButton)
 
         allPlacesButton.setOnClickListener {
-
-            val builder = LatLngBounds.builder()
-
             if (places.isNotEmpty()) {
+                val builder = LatLngBounds.builder()
                 for (place in places) {
                     val location = LatLng(place.latitude, place.longitude)
                     builder.include(location)
@@ -72,13 +70,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 val padding = 50
                 val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
                 map.animateCamera(cameraUpdate)
-            } else {
-                map.moveCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        currentCameraPosition,
-                        currentZoom
-                    )
-                )
             }
         }
     }

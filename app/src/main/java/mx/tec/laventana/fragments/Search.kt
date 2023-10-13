@@ -25,6 +25,10 @@ class Search : Fragment() {
     private lateinit var result2: TextView
     private lateinit var result3: TextView
 
+    private lateinit var result1Container: View
+    private lateinit var result2Container: View
+    private lateinit var result3Container: View
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -36,13 +40,17 @@ class Search : Fragment() {
         result2 = rootView.findViewById(R.id.textViewResult2)
         result3 = rootView.findViewById(R.id.textViewResult3)
 
+        result1Container = rootView.findViewById(R.id.result1Container)
+        result2Container = rootView.findViewById(R.id.result2Container)
+        result3Container = rootView.findViewById(R.id.result3Container)
+
         editText.requestFocus()
 
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
 
-        editText.setOnTouchListener { v, event ->
+        editText.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 val editTextRight = editText.right
 
@@ -57,12 +65,10 @@ class Search : Fragment() {
             false
         }
 
-
         val db = AppDatabase.getInstance(requireContext())
 
         Thread {
             places = db.locationDao().getLocations()
-            filterSuggestions("")
         }.start()
 
         editText.addTextChangedListener {
@@ -70,20 +76,56 @@ class Search : Fragment() {
             filterSuggestions(searchText)
         }
 
+        result1.setOnClickListener {
+            if (result1.text.isNotEmpty()) {
+                val location = findLocation(result1.text.toString())
+                if (location != null) {
+                    onLocationClick(location)
+                }
+            }
+        }
+
+        result2.setOnClickListener {
+            if (result2.text.isNotEmpty()) {
+                val location = findLocation(result2.text.toString())
+                if (location != null) {
+                    onLocationClick(location)
+                }
+            }
+        }
+
+        result3.setOnClickListener {
+            if (result3.text.isNotEmpty()) {
+                val location = findLocation(result3.text.toString())
+                if (location != null) {
+                    onLocationClick(location)
+                }
+            }
+        }
+
         return rootView
     }
 
     private fun filterSuggestions(query: String) {
-        clearSuggestions()
-
         var suggestionCount = 0
         if (places.isNotEmpty()) {
             for (place in places) {
                 if (place.name.contains(query, ignoreCase = true)) {
                     when (suggestionCount) {
-                        0 -> result1.text = place.name
-                        1 -> result2.text = place.name
-                        2 -> result3.text = place.name
+                        0 -> {
+                            result1.text = place.name
+                            result1Container.visibility = View.VISIBLE
+                        }
+
+                        1 -> {
+                            result2.text = place.name
+                            result2Container.visibility = View.VISIBLE
+                        }
+
+                        2 -> {
+                            result3.text = place.name
+                            result3Container.visibility = View.VISIBLE
+                        }
                     }
                     suggestionCount++
                     if (suggestionCount >= 3) {
@@ -92,12 +134,22 @@ class Search : Fragment() {
                 }
             }
         }
+
+        // Set visibility for containers with no results
+        if (suggestionCount == 0) {
+            result1Container.visibility = View.GONE
+            result2Container.visibility = View.GONE
+            result3Container.visibility = View.GONE
+        } else if (suggestionCount == 1) {
+            result2Container.visibility = View.GONE
+            result3Container.visibility = View.GONE
+        } else if (suggestionCount == 2) {
+            result3Container.visibility = View.GONE
+        }
     }
 
-    private fun clearSuggestions() {
-        result1.text = ""
-        result2.text = ""
-        result3.text = ""
+    private fun findLocation(locationName: String): Location? {
+        return places.find { it.name == locationName }
     }
 
     private fun onLocationClick(location: Location) {
