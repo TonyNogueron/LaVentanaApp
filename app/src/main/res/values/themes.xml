@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.LaVentana" parent="Base.Theme.LaVentana" />
+
+    <style name="WhiteArrowToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/ventanaGreen</item>
+        <item name="android:navigationIcon">@drawable/ic_baseline_arrow_back_24</item>
+    </style>
+
+
 </resources>

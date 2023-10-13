@@ -1,5 +1,7 @@
 package mx.tec.laventana
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -7,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 
 class DetailedInfoActivity : AppCompatActivity() {
@@ -21,6 +24,8 @@ class DetailedInfoActivity : AppCompatActivity() {
         val txtCat3 = findViewById<TextView>(R.id.txtCat3)
         val txtCat4 = findViewById<TextView>(R.id.txtCat4)
         val txtDescription = findViewById<TextView>(R.id.txtDescription)
+        val getDirectionsButton = findViewById<TextView>(R.id.btnVerMapa)
+
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -61,6 +66,21 @@ class DetailedInfoActivity : AppCompatActivity() {
             txtCat4.text = locationCategory4
         } else {
             txtCat4.visibility = View.GONE
+        }
+
+        getDirectionsButton.setOnClickListener {
+            val uri =
+                "https://www.google.com/maps/dir/?api=1&destination=$locationLatitude,$locationLongitude"
+
+            val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+            mapIntent.setPackage("com.google.android.apps.maps")
+
+            if (mapIntent.resolveActivity(it.context.packageManager) != null) {
+                ContextCompat.startActivity(it.context, mapIntent, null)
+            } else {
+                val webMapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                ContextCompat.startActivity(it.context, webMapIntent, null)
+            }
         }
 
         txtAddress.text = locationName

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import mx.tec.laventana.R
@@ -60,14 +59,9 @@ class MapCardAdapter(
         holder.bindData(location)
 
         holder.itemView.setOnClickListener {
+            listener?.onItemClick(location)
             itemClickCallback(position)
-            moreInfoClicked(location)
         }
-    }
-
-
-    private fun moreInfoClicked(location: Location) {
-        Toast.makeText(context, "More info clicked: " + location.name, Toast.LENGTH_SHORT).show()
     }
 
     fun updateData(locations: MutableList<Location>) {
@@ -76,4 +70,7 @@ class MapCardAdapter(
         notifyDataSetChanged()
     }
 
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
 }

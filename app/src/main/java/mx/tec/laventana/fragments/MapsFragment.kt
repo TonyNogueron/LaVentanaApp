@@ -2,6 +2,7 @@ package mx.tec.laventana.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mx.tec.laventana.DetailedInfoActivity
 import mx.tec.laventana.R
 import mx.tec.laventana.adapter.MapCardAdapter
 import mx.tec.laventana.model.Location
@@ -49,7 +51,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -61,25 +62,22 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         allPlacesButton.setOnClickListener {
             if (places.isNotEmpty()) {
                 val builder = LatLngBounds.builder()
-                for (place in places) {
-                    val location = LatLng(place.latitude, place.longitude)
-                    builder.include(location)
-                }
-
-                val bounds = builder.build()
-                val padding = 50
-                val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
-                map.animateCamera(cameraUpdate)
+                addMarkers(places, builder)
+                map.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 50))
             }
         }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         map.clear()
         map.uiSettings.isZoomControlsEnabled = false
 
+        loadPlacesAndSetBounds()
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun loadPlacesAndSetBounds() {
         val builder = LatLngBounds.builder()
 
         val db = AppDatabase.getInstance(requireContext())
@@ -90,7 +88,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 if (places.isNotEmpty()) {
                     addMarkers(places, builder)
                     setMapClickListener(places)
-                    moveCameraToBound(builder)
 
                     viewPager = view?.findViewById(R.id.viewPager) ?: return@withContext
                     setupViewPager(places)
@@ -107,11 +104,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     } else {
                         requestLocationPermissions()
                     }
+
+                    moveCameraToBound(builder)
                 }
             }
         }
     }
-
 
     private fun addMarkers(places: List<Location>, builder: LatLngBounds.Builder) {
         for (place in places) {
@@ -127,10 +125,21 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             if (position != -1) {
                 selectedViewPagerItem = position
                 viewPager.currentItem = position
-                updateCameraPosition(position, places)
             }
             true
         }
+    }
+
+    private fun onLocationClick(location: Location) {
+        val intent = Intent(requireContext(), DetailedInfoActivity::class.java).apply {
+            putExtra("currentLocationName", location.name)
+            putExtra("currentLocationDescription", location.description)
+            putExtra("currentLocationImageURL", location.imageURL)
+            putExtra("currentLocationLatitude", location.latitude.toFloat())
+            putExtra("currentLocationLongitude", location.longitude.toFloat())
+            putExtra("currentLocationCategory1", "Category 1")
+        }
+        startActivity(intent)
     }
 
     private fun moveCameraToBound(builder: LatLngBounds.Builder) {
@@ -145,6 +154,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             viewPager.currentItem = position
             updateCameraPosition(position, places)
         }
+
+        mapCardAdapter.setOnItemClickListener(object : MapCardAdapter.OnItemClickListener {
+            override fun onItemClick(mapCardItem: Location) {
+                onLocationClick(mapCardItem)
+            }
+        })
 
         if (selectedViewPagerItem != -1) {
             viewPager.setCurrentItem(selectedViewPagerItem, false)
