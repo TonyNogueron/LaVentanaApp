@@ -7,7 +7,7 @@ import java.sql.Date
 
 @Entity
 data class Location(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "idLocation")
     val idLocation: Int,
     @ColumnInfo(name = "name")
@@ -20,4 +20,6 @@ data class Location(
     val latitude: Double,
     @ColumnInfo(name = "longitude")
     val longitude: Double,
+    @ColumnInfo(name = "category")
+    val category: String
 )
