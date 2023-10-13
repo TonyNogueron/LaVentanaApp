@@ -159,7 +159,7 @@ class Search : Fragment() {
             putExtra("currentLocationImageURL", location.imageURL)
             putExtra("currentLocationLatitude", location.latitude.toFloat())
             putExtra("currentLocationLongitude", location.longitude.toFloat())
-            putExtra("currentLocationCategory1", "Category 1")
+            putExtra("currentLocationCategory1", location.category)
         }
         startActivity(intent)
     }
