@@ -1,6 +1,7 @@
 package mx.tec.laventana.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mx.tec.laventana.DetailedInfoActivity
 import mx.tec.laventana.R
 import mx.tec.laventana.adapter.LocationCardAdapter
 import mx.tec.laventana.model.Location
@@ -36,7 +38,7 @@ class PlacesList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById<RecyclerView>(R.id.rvPlacesList)
+        recyclerView = view.findViewById(R.id.rvPlacesList)
         places = mutableListOf()
 
         sharedPreferences =
@@ -50,13 +52,6 @@ class PlacesList : Fragment() {
                 placesAdapter = LocationCardAdapter(requireContext(), places) { position ->
                     onLocationClick(places[position])
                 }
-                placesAdapter.setOnItemClickListener(object :
-                    LocationCardAdapter.OnItemClickListener {
-                    override fun onItemClick(locationCardItem: Location) {
-                        onLocationClick(locationCardItem)
-                    }
-                }
-                )
                 recyclerView.apply {
                     adapter = placesAdapter
                     setHasFixedSize(true)
@@ -70,21 +65,16 @@ class PlacesList : Fragment() {
         }
     }
 
-    // TODO: FIX NAVIGATION
     private fun onLocationClick(location: Location) {
-        saveCurrentLocation(location)
-
-        val navController = NavHostFragment.findNavController(this)
-        navController.navigate(R.id.action_placesList_to_moreInfoFragment)
-    }
-
-    private fun saveCurrentLocation(location: Location) {
-        val editor = sharedPreferences.edit()
-        editor.putString("currentLocationName", location.name)
-        editor.putString("currentLocationDescription", location.description)
-        editor.putString("currentLocationImageURL", location.imageURL)
-        editor.putFloat("currentLocationLatitude", location.latitude.toFloat())
-        editor.putFloat("currentLocationLongitude", location.longitude.toFloat())
-        editor.apply()
+        val intent = Intent(requireContext(), DetailedInfoActivity::class.java).apply {
+            putExtra("currentLocationName", location.name)
+            putExtra("currentLocationDescription", location.description)
+            putExtra("currentLocationImageURL", location.imageURL)
+            putExtra("currentLocationLatitude", location.latitude.toFloat())
+            putExtra("currentLocationLongitude", location.longitude.toFloat())
+            putExtra("currentLocationCategory1", "Category 1")
+        }
+        startActivity(intent)
     }
 }
+

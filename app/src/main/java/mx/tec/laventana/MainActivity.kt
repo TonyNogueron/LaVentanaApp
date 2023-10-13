@@ -1,7 +1,5 @@
 package mx.tec.laventana
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
@@ -10,11 +8,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.maps.model.LatLng
 import mx.tec.laventana.databinding.ActivityMainBinding
-import mx.tec.laventana.model.ImageData
 import mx.tec.laventana.model.Location
 import mx.tec.laventana.utility.AppDatabase
-import java.io.ByteArrayOutputStream
-import java.net.URL
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar

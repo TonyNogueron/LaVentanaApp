@@ -5,25 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.sql.Date
 
-data class ImageData(
-    val image: ByteArray
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ImageData
-
-        if (!image.contentEquals(other.image)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return image.contentHashCode()
-    }
-}
-
 @Entity
 data class Location(
     @PrimaryKey(autoGenerate = true)
@@ -39,6 +20,4 @@ data class Location(
     val latitude: Double,
     @ColumnInfo(name = "longitude")
     val longitude: Double,
-//    @ColumnInfo(name = "imageData")
-//    val imageData: ImageData
 )

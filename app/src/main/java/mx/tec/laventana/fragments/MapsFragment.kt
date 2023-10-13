@@ -20,7 +20,6 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -37,6 +36,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var viewPager: ViewPager2
     private lateinit var mapCardAdapter: MapCardAdapter
     private lateinit var allPlacesButton: FloatingActionButton
+    private lateinit var mapFragment: SupportMapFragment
 
     private var currentCameraPosition = LatLng(20.4872413, -88.5884549)
     private var currentZoom = 8f
@@ -53,10 +53,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mapFragment =
-            childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-
-        mapFragment?.getMapAsync(this)
+        mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         allPlacesButton = view.findViewById(R.id.showAllButton)
 
@@ -112,16 +110,17 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                             mapCardAdapter.updateData(places)
                         }
                     }
-                }
 
-                if (isLocationPermissionGranted()) {
-                    showUserLocation()
-                } else {
-                    requestLocationPermissions()
+                    if (isLocationPermissionGranted()) {
+                        showUserLocation()
+                    } else {
+                        requestLocationPermissions()
+                    }
                 }
             }
         }
     }
+
 
     private fun addMarkers(places: List<Location>, builder: LatLngBounds.Builder) {
         for (place in places) {

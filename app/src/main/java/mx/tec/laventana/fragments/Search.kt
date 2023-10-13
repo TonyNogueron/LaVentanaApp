@@ -2,6 +2,7 @@ package mx.tec.laventana.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -12,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import mx.tec.laventana.DetailedInfoActivity
 import mx.tec.laventana.R
 import mx.tec.laventana.model.Location
 import mx.tec.laventana.utility.AppDatabase
@@ -96,5 +98,17 @@ class Search : Fragment() {
         result1.text = ""
         result2.text = ""
         result3.text = ""
+    }
+
+    private fun onLocationClick(location: Location) {
+        val intent = Intent(requireContext(), DetailedInfoActivity::class.java).apply {
+            putExtra("currentLocationName", location.name)
+            putExtra("currentLocationDescription", location.description)
+            putExtra("currentLocationImageURL", location.imageURL)
+            putExtra("currentLocationLatitude", location.latitude.toFloat())
+            putExtra("currentLocationLongitude", location.longitude.toFloat())
+            putExtra("currentLocationCategory1", "Category 1")
+        }
+        startActivity(intent)
     }
 }
