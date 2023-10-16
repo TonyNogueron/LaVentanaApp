@@ -15,7 +15,7 @@ data class Location(
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "imageURL")
-    val imageURL: String,
+    val imageURL: String? = null,
     @ColumnInfo(name = "latitude")
     val latitude: Double,
     @ColumnInfo(name = "longitude")
