@@ -77,7 +77,7 @@ class PlacesList : Fragment() {
             putExtra("currentLocationImageURL", location.imageURL)
             putExtra("currentLocationLatitude", location.latitude.toFloat())
             putExtra("currentLocationLongitude", location.longitude.toFloat())
-            putExtra("currentLocationCategory1", location.category)
+            putExtra("currentLocationCategory1", "Category 1")
         }
         startActivity(intent)
     }
