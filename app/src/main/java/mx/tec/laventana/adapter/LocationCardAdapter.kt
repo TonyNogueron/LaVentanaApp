@@ -60,8 +60,7 @@ class LocationCardAdapter(
                 intent.putExtra("currentLocationImageURL", location.imageURL)
                 intent.putExtra("currentLocationLatitude", location.latitude)
                 intent.putExtra("currentLocationLongitude", location.longitude)
-                intent.putExtra("currentLocationCategory1", "Category 1")
-                intent.putExtra("currentLocationCategory2", "Category 2")
+                intent.putExtra("currentLocationCategory1", location.category)
                 startActivity(itemView.context, intent, null)
             }
 
