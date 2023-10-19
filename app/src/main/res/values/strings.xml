@@ -1,15 +1,13 @@
 <resources>
-    <string name="app_name">LaVentana</string>
+    <string name="app_name" translatable="false">LaVentana</string>
     <string name="search">Search</string>
     <string name="places">Places</string>
-    <string name="home">Home</string>
+    <string name="map">Map</string>
     <string name="suggestion_icon">Suggestion icon</string>
     <string name="search_hint">Search</string>
-    <string name="todo">TODO</string>
+    <string name="todo" translatable="false">TODO</string>
     <string name="btnCInfo">+INFO</string>
-    <string name="btnCMap">VER MAPA</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="btnVerMapa">VER EN MAPA</string>
+    <string name="btnCMap">SEE MAP</string>
+    <string name="btnVerMapa">SEE ON MAP</string>
     <string name="suggested_places">Suggested Places</string>
 </resources>

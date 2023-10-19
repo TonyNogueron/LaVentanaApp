@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Buscar</string>
+    <string name="places">Ubicaciones</string>
+    <string name="suggestion_icon">Icono</string>
+    <string name="search_hint">Buscar</string>
+    <string name="btnCInfo">+INFO</string>
+    <string name="btnCMap">VER MAPA</string>
+    <string name="btnVerMapa">VER EN MAPA</string>
+    <string name="suggested_places">Lugares Sugeridos</string>
+    <string name="map">Mapa</string>
+</resources>

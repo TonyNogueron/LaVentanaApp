@@ -2,6 +2,7 @@ package mx.tec.laventana
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -16,6 +17,10 @@ class DetailedInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailed_info)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.statusBarColor = getColor(R.color.ventanaGreen)
+        }
 
         val imgPlace = findViewById<ImageView>(R.id.imgPlace)
         val txtAddress = findViewById<TextView>(R.id.txtAddress)
