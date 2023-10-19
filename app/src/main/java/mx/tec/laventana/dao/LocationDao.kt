@@ -13,4 +13,7 @@ interface LocationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun registerLocation(location: Location)
+
+    @Query("DELETE FROM Location")
+    fun deleteAll()
 }

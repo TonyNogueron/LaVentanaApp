@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -40,8 +41,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var allPlacesButton: FloatingActionButton
     private lateinit var mapFragment: SupportMapFragment
 
-    private var currentCameraPosition = LatLng(20.4872413, -88.5884549)
-    private var currentZoom = 8f
     private var selectedViewPagerItem = -1
     private lateinit var places: MutableList<Location>
 
@@ -111,10 +110,16 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun addMarkers(places: List<Location>, builder: LatLngBounds.Builder) {
         for (place in places) {
             val location = LatLng(place.latitude, place.longitude)
-            map.addMarker(MarkerOptions().position(location).title(place.name))
+            GlobalScope.launch(Dispatchers.Main) {
+                map.addMarker(
+                    MarkerOptions().position(location).title(place.name)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador48px))
+                )
+            }
             builder.include(location)
         }
     }
