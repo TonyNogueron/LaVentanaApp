@@ -10,9 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import mx.tec.laventana.DetailedInfoActivity
 import mx.tec.laventana.R
 import mx.tec.laventana.model.Location
@@ -29,6 +35,7 @@ class Search : Fragment() {
     private lateinit var result2Container: View
     private lateinit var result3Container: View
 
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -43,6 +50,9 @@ class Search : Fragment() {
         result1Container = rootView.findViewById(R.id.result1Container)
         result2Container = rootView.findViewById(R.id.result2Container)
         result3Container = rootView.findViewById(R.id.result3Container)
+
+        val suggestedPlacesContainer =
+            rootView.findViewById<LinearLayout>(R.id.suggestedPlacesContainer)
 
         editText.requestFocus()
 
@@ -67,9 +77,25 @@ class Search : Fragment() {
 
         val db = AppDatabase.getInstance(requireContext())
 
-        Thread {
+        GlobalScope.launch(Dispatchers.IO) {
             places = db.locationDao().getLocations()
-        }.start()
+            filterSuggestions("")
+
+            val randomPlaces = places.shuffled().take(3)
+            for (place in randomPlaces) {
+                val textView = LayoutInflater.from(requireContext())
+                    .inflate(R.layout.suggested_place_item, null) as TextView
+                textView.text = place.name
+                textView.setOnClickListener {
+                    onLocationClick(place)
+                }
+
+                withContext(Dispatchers.Main) {
+                    suggestedPlacesContainer.addView(textView)
+                }
+            }
+
+        }
 
         editText.addTextChangedListener {
             val searchText = it.toString()
